@@ -1,0 +1,11 @@
+com.elmundobinario.lacomidadelcanco.app-constraintlayout-1.1.3-0 /home/marc/.gradle/caches/transforms-3/4c932d7ac93add240d7df4319c717518/transformed/constraintlayout-1.1.3/res
+com.elmundobinario.lacomidadelcanco.app-core-1.1.0-1 /home/marc/.gradle/caches/transforms-3/6d2ca9ab0ef8c4dc3159ef3ffbd950fa/transformed/core-1.1.0/res
+com.elmundobinario.lacomidadelcanco.app-jetified-appcompat-resources-1.1.0-2 /home/marc/.gradle/caches/transforms-3/8cee9d1e56502b92c8067eaa09d5b370/transformed/jetified-appcompat-resources-1.1.0/res
+com.elmundobinario.lacomidadelcanco.app-appcompat-1.1.0-3 /home/marc/.gradle/caches/transforms-3/c012c6079b8c8dab275d75dbf7f9d2d3/transformed/appcompat-1.1.0/res
+com.elmundobinario.lacomidadelcanco.app-pngs-4 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/build/generated/res/pngs/release
+com.elmundobinario.lacomidadelcanco.app-resValues-5 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/build/generated/res/resValues/release
+com.elmundobinario.lacomidadelcanco.app-mergeReleaseResources-6 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.elmundobinario.lacomidadelcanco.app-mergeReleaseResources-7 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.elmundobinario.lacomidadelcanco.app-merged_res-8 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/build/intermediates/merged_res/release
+com.elmundobinario.lacomidadelcanco.app-main-9 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/src/main/res
+com.elmundobinario.lacomidadelcanco.app-release-10 /home/marc/Escritorio/.MEGA/FORMACION_PROPIA_CURSOS/1_ANDROID/work_space_AndroidStudio/LaComidaDelCanco3/app/src/release/res

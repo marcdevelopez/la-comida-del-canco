@@ -1,0 +1,606 @@
+[
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_shape_boton_ultimacena.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/shape_boton_ultimacena.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_cayena_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/cayena_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_alubias_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/alubias_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_habas_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/habas_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_levadura_de_cerveza.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/levadura_de_cerveza.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_altramuces_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/altramuces_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout-sw600dp_activity_menu_almuerzo_final.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout-sw600dp/activity_menu_almuerzo_final.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_bandeja.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/bandeja.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_comino_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/comino_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_cardo_aimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/cardo_aimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_boquerones_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/boquerones_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-anydpi-v21_ic_launcher_background.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-anydpi-v21/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_mesamadera.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/mesamadera.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_azulejo.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/azulejo.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_cardo_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/cardo_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_sardinas_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/sardinas_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-mdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-mdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pimientos_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pimientos_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_habas_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/habas_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_amaranto_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/amaranto_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_arroz_blanco_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/arroz_blanco_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_amaranto_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/amaranto_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-xxhdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-xxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_champinones_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/champinones_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_cacahuetes_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/cacahuetes_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_bonito_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/bonito_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_curcuma_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/curcuma_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xhdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pepino_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pepino_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_alcachofa_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/alcachofa_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_caballa_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/caballa_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_huevos_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/huevos_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_atun_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/atun_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_oregano_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/oregano_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_chirivia_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/chirivia_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pollo_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pollo_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_judias_verdes_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/judias_verdes_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_arenques_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/arenques_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_jurel_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/jurel_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_lentejas_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/lentejas_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout_activity_menu_almuerzo_final.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout/activity_menu_almuerzo_final.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_nabos_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/nabos_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_batata_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/batata_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_hinojo_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/hinojo_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_brecol_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/brecol_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-xxxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_trigo_sarraceno_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/trigo_sarraceno_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_arroz_integral_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/arroz_integral_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_shape_boton_otracomida.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/shape_boton_otracomida.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pasta_integral_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pasta_integral_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_hiervabuena_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/hiervabuena_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_maiz_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/maiz_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_guisantes_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/guisantes_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_mantelamarillo.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/mantelamarillo.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout_activity_cena.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout/activity_cena.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_vino_blanco_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/vino_blanco_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-ldpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-ldpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_tranparente.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/tranparente.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_canela_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/canela_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_shape_boton_ultimoalmuerzo.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/shape_boton_ultimoalmuerzo.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pasta_integral_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pasta_integral_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_almuerzo.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/almuerzo.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_aceitunasalimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/aceitunasalimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_esparragos_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/esparragos_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_calabacines_vasos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/calabacines_vasos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_azuki_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/azuki_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_albahaca_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/albahaca_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_rabano_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/rabano_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_laurel_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/laurel_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_si.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/si.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_marmol.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/marmol.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_remolacha_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/remolacha_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_cacahuetes_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/cacahuetes_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_ajetesalimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/ajetesalimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_quinoa_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/quinoa_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_guisantes_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/guisantes_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_nabo_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/nabo_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pimiento_medida.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pimiento_medida.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_alubias_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/alubias_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout_activity_main.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_tallos_acelgas_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/tallos_acelgas_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_jengibre_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/jengibre_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_shape_sombra_esteeselalmuerzo.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/shape_sombra_esteeselalmuerzo.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_calabacin.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/calabacin.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_calabaza_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/calabaza_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_salmon_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/salmon_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_trigo_sarraceno_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/trigo_sarraceno_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_patata_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/patata_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_pimenton_dulce_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/pimenton_dulce_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_aceitunas_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/aceitunas_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_soja_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/soja_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_coliflor_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/coliflor_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_arroz_integral_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/arroz_integral_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout_activity_almuerzo.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout/activity_almuerzo.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_no.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/no.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_mantelverde.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/mantelverde.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_lentejas_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/lentejas_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_apio_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/apio_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxxhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_berenjena_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/berenjena_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_patatas_medida.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/patatas_medida.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-mdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-mdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_coles_de_bruselas_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/coles_de_bruselas_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout-sw600dp_activity_menu_cena_final.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout-sw600dp/activity_menu_cena_final.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_judias_verdes_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/judias_verdes_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_puerro_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/puerro_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_coles_de_bruselas_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/coles_de_bruselas_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_garbanzos_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/garbanzos_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_grelos_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/grelos_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxxhdpi_bandeja_fondo.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxxhdpi/bandeja_fondo.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_calabaza_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/calabaza_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_borraja_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/borraja_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_currry_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/currry_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-xhdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-xhdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_mijo_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/mijo_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_quinoa_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/quinoa_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_tomillo_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/tomillo_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_chucrut_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/chucrut_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_shape_sombra_estaeslacena.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/shape_sombra_estaeslacena.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_maiz_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/maiz_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-hdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-hdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_mijo_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/mijo_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_arroz_blanco_alimento.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/arroz_blanco_alimento.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-xxhdpi_cena.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-xxhdpi/cena.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_brecol_medidas.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/brecol_medidas.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_altramuces_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/altramuces_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_trucha_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/trucha_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-pngs-4:/drawable-hdpi/ic_launcher_background.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/layout_activity_menu_cena_final.xml.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/layout/activity_menu_cena_final.xml"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_garbanzos_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/garbanzos_alimentos.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_chirivia_vaso.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/chirivia_vaso.png"
+    },
+    {
+        "merged": "com.elmundobinario.lacomidadelcanco.app-merged_res-8:/drawable_mejorana_alimentos.png.flat",
+        "source": "com.elmundobinario.lacomidadelcanco.app-main-10:/drawable/mejorana_alimentos.png"
+    }
+]
