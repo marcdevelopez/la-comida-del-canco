@@ -1,0 +1,21 @@
+# Build outputs
+/build/
+/app/build/
+/app/release/
+*.apk
+*.aab
+
+# Gradle
+.gradle/
+local.properties
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Local assistant/context artifacts
+/memory/
+
+# Project resources (signing keys, APKs, legacy assets — NOT for versioning)
+/project-resources/
