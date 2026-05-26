@@ -15,6 +15,16 @@ La Comida del Canco is an Android application developed in Java, designed with l
 
 - **May - June 2021**: Initial development period, where the core functionalities and design were established.
 - **Subsequent Updates**: Ongoing improvements made to the user interface to enhance usability and visual appeal.
+- **May 2026**: Planning and scaffolding for a Flutter version, plus definition of a second role (`admin`) to improve versatility and usability: menu history, management of foods/images, and better control tools while preserving the simple user experience for elderly users.
+
+## Why `flutter_app/` is in this same repository
+
+The Flutter project is intentionally inside this repository to support a gradual migration:
+
+- Keep the current Java Android app (`app/`) as the functional baseline.
+- Build the Flutter version (`flutter_app/`) in parallel without losing behavior parity.
+- Compare flows and logic step by step while preserving project history in one place.
+- Reduce risk for the end user by avoiding a disruptive “big-bang” rewrite.
 
 ## Installation
 
