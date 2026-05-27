@@ -700,7 +700,8 @@ Home
 ## 9. Comportamiento general
 
 - **Pantalla siempre encendida:** Todas las pantallas de usuario mantienen el display activo mientras están abiertas.
-- **Orientación:** Todas las pantallas de usuario están bloqueadas en horizontal (landscape). Las pantallas de admin pueden ser portrait o libre.
+- **Orientación (MVP):** Todas las pantallas (usuario, onboarding y admin) están bloqueadas en horizontal (landscape) para mantener coherencia con la app Android original.
+- **Transición de modos:** Al pasar de Home a Dashboard admin (o volver), no hay cambio de orientación ni pantalla intermedia técnica.
 - **Botón atrás:** No hay override en las pantallas de usuario; el sistema maneja la navegación hacia atrás.
 - **Idioma:** Español exclusivamente.
 
@@ -728,81 +729,154 @@ Home
 
 ---
 
-## 11. Arquitectura multi-rol
+## 11. Arquitectura multi-modo por dispositivo
 
 ### 11.1 Filosofía de diseño
 
-La app tiene **una sola codebase Flutter**. Al abrirse, lee el rol almacenado localmente en el dispositivo y muestra una experiencia completamente diferente según ese rol. El usuario no-admin nunca ve ningún elemento de la interfaz de admin. El admin nunca ve la interfaz simplificada de usuario.
+La app tiene **una sola codebase Flutter** y una sola cuenta compartida por hogar/grupo. Esa cuenta funciona como contenedor de varios dispositivos (ej: familia), que comparten datos pero pueden tener distinto estado admin por dispositivo.
 
-La separación de roles es de **UX** y también de **seguridad de backend**:
-- UX: cada dispositivo recuerda su rol y no vuelve a preguntarlo.
-- Backend: todo acceso a datos se valida con Firebase Auth + reglas Firestore por membresía.
+El principio funcional es:
+- `admin = user + extras`.
+- El admin **no entra a otra app**: usa la misma Home y el mismo flujo de menús, y además puede abrir panel admin.
+- No hay selector visible de rol en la UI principal.
 
-### 11.2 Los dos roles
+La separación entre uso normal y administración es, en MVP, principalmente de **modo de interfaz por dispositivo**:
+- Modo usuario: flujo original simple, sin opciones de admin visibles.
+- Modo admin: panel de gestión, activable solo por gesto oculto y solo en dispositivos habilitados.
 
-| Rol | Dispositivo | Experiencia | Autenticación |
-|-----|-------------|-------------|---------------|
-| `user` | Dispositivo del usuario | Idéntica a la app original con mejoras menores de UX | **Firebase Auth anónimo silencioso** (sin pantalla de login) |
-| `admin` | Móvil del desarrollador (u otro device) | Panel completo de gestión e historial | Login con email/contraseña (Firebase Auth) + claim `admin=true` |
+### 11.2 Tres estados de control por dispositivo (MVP)
 
-### 11.3 Asignación de rol en el dispositivo
+Son tres estados completamente distintos. Es fundamental no confundirlos al implementar:
 
-El rol se guarda en **SharedPreferences local** al primer uso. Una vez asignado, **nunca se pregunta de nuevo**.
+| Estado | Naturaleza | Quién lo controla | Qué significa |
+|--------|-----------|-------------------|---------------|
+| `adminEnabled` | **Permiso** — cloud, campo en `devices/{deviceId}` en Firestore | Otro device en modo admin (vía callable) | ¿Tiene permiso este device para activar el modo admin? No implica que lo esté usando ahora. |
+| `adminModeActive` | **Uso activo** — in-memory, solo dura mientras la app está abierta | El propio device, al completar el gesto | ¿Está el device actualmente ejecutando la UI de admin (dashboard, gestión, etc.)? Se resetea a `false` al cerrar la app. |
+| `lastMode` | **Memoria de sesión** — local SharedPreferences, persiste entre aperturas | El propio device, al cambiar de modo | ¿En qué modo terminó el device la última vez que se cerró la app? Se usa al arrancar para restaurar el estado. |
+
+**Regla fundamental:** `adminEnabled` es condición necesaria pero no suficiente para que `adminModeActive` sea `true`. El usuario debe ejecutar el gesto conscientemente. Tener `adminEnabled=true` no activa admin automáticamente, solo habilita el gesto.
+
+Estados resultantes por dispositivo:
+- `adminEnabled = false` → solo modo usuario; el gesto no tiene efecto.
+- `adminEnabled = true` + `adminModeActive = false` → permiso disponible, pero actualmente en modo usuario.
+- `adminEnabled = true` + `adminModeActive = true` → en modo admin activo (gesto ya ejecutado en esta sesión).
+
+En MVP, los nuevos dispositivos de una cuenta se registran con `adminEnabled = true` por defecto, y luego cualquier device en modo admin puede desactivar ese permiso en otros devices.
+
+### 11.3 Flujo de arranque y login
 
 **Flujo de primer arranque:**
 
 ```
-App se abre por primera vez
+App se abre por primera vez en un device
     │
-    ├─ ¿Hay rol guardado localmente?
-    │       SÍ → entra directamente en la experiencia del rol guardado
+    ├─ ¿Hay sesión de cuenta activa (Firebase Auth)?
+    │       SÍ → continúa
     │
-    └─ NO → ¿Se ha activado el gesto secreto de configuración?
-                │
-                ├─ NO → entra como "user" (comportamiento por defecto)
-                │       Guarda rol "user" localmente
-                │       y hace signInAnonymously() en segundo plano
-                │
-                └─ SÍ → muestra pantalla de login admin
-                            Login correcto → guarda rol "admin" localmente
-                            Login incorrecto → vuelve a la pantalla de login
+    └─ NO → muestra login de cuenta
+                Dos métodos disponibles:
+                  - Google Sign-In (OAuth, cuenta Gmail)
+                  - email/contraseña (puede ser una dirección Gmail u otra)
+                Login correcto → continúa
+                Login incorrecto → mantiene pantalla de login
+
+Continuación:
+1) La app obtiene/crea `householdId` para la cuenta.
+2) Llama a callable `registerOrHeartbeatDevice(deviceId, alias, platform, appVersion, systemName, model)`.
+3) Si el device es nuevo, asigna alias por defecto automáticamente (sin pantalla específica de renombrado de device).
+4) Si `onboardingSeen=false`, muestra onboarding de cuenta/devices/modos (una sola vez por device).
+5) Al abrir:
+   - si `lastMode=admin` y `adminEnabled=true` → entra en modo admin
+   - en cualquier otro caso → entra en modo usuario
 ```
 
-**Gesto secreto de configuración:** Pulsar el título/logo de la pantalla de inicio **7 veces seguidas en menos de 4 segundos**. Este gesto es prácticamente imposible de activar por accidente. Solo lo conoce el desarrollador.
+### 11.4 Activación del modo admin por gesto
 
-**Por qué el defecto es "user" y no "elegir rol":** Si el usuario instala una actualización o reinstala la app desde cero, sin hacer el gesto, la app arranca como usuario. Nunca aparecerá un modal de selección de rol que lo confunda.
+Desde la Home de usuario existe un gesto oculto simple (MVP) para abrir admin.
 
-### 11.4 Identidad compartida: `householdId` (antes `userId`)
+**Gesto definido (MVP):** pulsación larga de **2.5 segundos** sobre el título/logo de la Home.
 
-Ambos roles leen y escriben en el mismo proyecto Firebase, bajo un identificador compartido de hogar: `householdId`.
+Regla:
+1. Se detecta el gesto.
+2. La app consulta `devices/{deviceId}.adminEnabled` (campo cloud, ya cacheado por Firestore offline persistence).
+3. Si `adminEnabled = true` → muestra `Modal Bottom Sheet` con acción principal `Entrar en modo admin`.
+4. Al confirmar: pone `adminModeActive = true` (in-memory), guarda `lastMode = "admin"` (SharedPreferences) y abre Dashboard admin.
+5. Si `adminEnabled = false` → el gesto no produce ningún efecto ni feedback visible.
 
-- El dispositivo `user` crea (o recupera) su `householdId`.
-- El dispositivo `admin` se **vincula** a ese `householdId` una sola vez.
-- Desde ese momento, el admin ve en tiempo real los menús y eventos de ese hogar.
+No hay PIN en el MVP. La simplicidad se logra manteniendo la UI oculta y el control remoto por dispositivo.
 
-`householdId` no depende de una ruta editable por cliente ni de un UUID “fiado”; siempre se valida por membresía autenticada en Firestore.
+### 11.5 Gestión remota de admin por dispositivo
 
-### 11.5 Vinculación admin ↔ user (pairing)
+Desde modo admin, un dispositivo puede gestionar otros dispositivos de la misma cuenta:
+- Ver lista de dispositivos registrados.
+- Activar/desactivar `adminEnabled` en cualquier otro dispositivo.
+- Los cambios aplican en tiempo real (o en la próxima sincronización del dispositivo objetivo).
 
-La vinculación entre dispositivos se realiza con **código de emparejamiento de un solo uso** (y opcionalmente QR con el mismo código).
+Reglas MVP:
+1. Un dispositivo **no puede desactivarse a sí mismo** (`self-disable` prohibido).
+2. Solo desde panel admin se expone la acción de cambiar `adminEnabled`, y el backend valida además `devices/{requesterDeviceId}.adminEnabled == true`.
+3. Si a un dispositivo se le pone `adminEnabled = false`, desde ese momento su gesto deja de abrir admin.
+4. La escritura de `adminEnabled` no se hace directa desde cliente: se hace vía callable `setDeviceAdminEnabled(...)` con validación server-side.
 
-Flujo:
-1. En el dispositivo `user`, el desarrollador activa un gesto oculto de mantenimiento.
-2. Se genera un código temporal (ej: 6 dígitos) válido 10 minutos.
-3. En el dispositivo `admin`, tras login, se introduce o escanea ese código.
-4. El backend valida el código y crea la membresía admin en ese `householdId`.
-5. Desde entonces, no hace falta repetir pairing salvo logout/borrado de app.
+### 11.6 Nombre de dispositivo (alias) e identidad
 
-El usuario final nunca ve esta UI en uso normal.
+El nombre visible del dispositivo (`alias`) es editable **solo desde modo admin** y **no define identidad**.
 
-### 11.6 Datos locales exclusivos del dispositivo de usuario
+Reglas:
+1. La identidad técnica del dispositivo es `deviceId` (estable en instalación/sesión), no el alias.
+2. `adminEnabled` está ligado a `deviceId`, nunca al alias.
+3. El cambio manual de alias solo está disponible desde `Gestión de dispositivos` en modo admin.
+4. Un dispositivo con `adminEnabled=false` no tiene acceso a cambio de nombre.
+5. Si un admin renombra un dispositivo con `adminEnabled=false`, ese dispositivo sigue `adminEnabled=false` hasta que otro admin lo habilite.
+6. En primer registro, el alias por defecto será:
+   - nombre del dispositivo del sistema si está disponible
+   - fallback: `"<plataforma> <modelo>"` (ej: `"Android Pixel 8"`, `"iOS iPhone"`).
+7. Cambiar alias nunca modifica `adminEnabled`.
 
-El **orden de rotación de las listas** (qué ingrediente aparece primero) se guarda localmente en el dispositivo del usuario. Es el único dato que no se sincroniza en la nube, por dos motivos:
+### 11.7 Identidad de datos: `householdId`
 
-1. No necesita sincronizarse: solo lo usa un dispositivo.
-2. Evita escrituras en Firestore en cada menú generado.
+Todos los dispositivos de la misma cuenta trabajan sobre el mismo `householdId`.
+- Catálogo, historial y eventos se comparten entre dispositivos de la cuenta.
+- La rotación de listas (orden FIFO local) sigue siendo por dispositivo para mantener fidelidad con la app original.
 
-Si el usuario cambia de móvil, el orden de rotación se reinicia a los valores por defecto (mismo comportamiento que la app original en su primer uso).
+### 11.8 Datos locales exclusivos del dispositivo de usuario
+
+Datos persistidos en almacenamiento local del device (SharedPreferences):
+
+1. `rotationOrder*` (orden FIFO de ingredientes por categoría).
+2. `lastMode` (`user` o `admin`).
+3. `onboardingSeen` (si el tutorial inicial ya se completó).
+
+Reglas:
+1. Estos datos son por device y no se comparten entre dispositivos de la cuenta.
+2. `rotationOrder*` no se sincroniza para preservar el comportamiento histórico local.
+3. Si el usuario cambia de móvil o reinstala, estos valores se reinician.
+
+### 11.9 Onboarding de cuenta, devices y modos
+
+Objetivo: explicar desde el primer uso cómo funciona la cuenta compartida, qué es un device, y cómo se usa el modo admin sin que aparezcan controles complejos en la UI diaria.
+
+Reglas:
+1. Se muestra una sola vez por device tras login correcto (`onboardingSeen=false`).
+2. No se puede omitir en MVP; requiere completar las pantallas y pulsar `Entendido`.
+3. Al completar, se guarda `onboardingSeen=true`.
+4. En aperturas normales ya no se muestra.
+5. El onboarding ocurre antes de entrar en Home y no modifica el flujo de elección de comidas.
+
+Contenido mínimo (4 pantallas):
+1. `Cuenta y hogar`: una cuenta = un hogar/grupo; varios devices pueden compartir historial y catálogo.
+2. `Modo usuario`: uso simple como la app Android original (hacer almuerzo/cena sin menús extra).
+3. `Modo admin`: admin = usuario + extras (historial, catálogo, papelera, estadísticas, dispositivos).
+4. `Cómo abrir admin`: pulsación larga de 2.5 s sobre logo/título en Home.
+
+Contenido contextual por estado:
+1. Si `adminEnabled=true`: explicar que ese device puede abrir admin por gesto.
+2. Si `adminEnabled=false`: explicar que en ese device el gesto no abre admin y que solo otro device admin puede habilitarlo.
+
+Casos de uso que se deben explicar en copy:
+1. Devices de personas mayores pueden quedarse en modo usuario (sin acceso admin).
+2. Devices de gestión familiar pueden mantener admin habilitado.
+3. Habilitar/deshabilitar admin se hace por device, no por nombre de device.
 
 ---
 
@@ -812,10 +886,10 @@ Si el usuario cambia de móvil, el orden de rotación se reinicia a los valores 
 
 | Servicio | Uso | Coste estimado (uso real) |
 |----------|-----|--------------------------|
-| Firebase Auth | Sesión anónima silenciosa del rol `user` + login del rol `admin` | Esperado dentro de Spark plan para este volumen |
-| Cloud Firestore | Historial, catálogo de alimentos, eventos de uso, membresías | Esperado dentro de free tier (50K lecturas/día, 20K escrituras/día) |
+| Firebase Auth | Login de cuenta única compartida entre devices. Dos métodos soportados: **Google Sign-In** (OAuth, cuenta Gmail) o **email/contraseña** (puede ser también una dirección Gmail). Sesión por device, independiente entre devices. | Esperado dentro de Spark plan para este volumen |
+| Cloud Firestore | Historial, catálogo, eventos y estado de dispositivos | Esperado dentro de free tier (50K lecturas/día, 20K escrituras/día) |
 | Firebase Storage | Fotos de ingredientes subidas por el admin | Esperado dentro de free tier (5 GB) |
-| Firebase Functions (callable) | Bootstrap seguro de hogar + emparejamiento admin | Uso mínimo; esperado dentro de free tier |
+| Firebase Functions (callable) | Bootstrap seguro de hogar, registro de device y cambios sensibles de admin | Uso mínimo; esperado dentro de free tier |
 
 **Conclusión de costes:** Con 1 hogar activo y bajo volumen, el uso esperado encaja holgadamente en el free tier. Aun así, se debe monitorizar mensualmente en Firebase Console.
 
@@ -826,26 +900,29 @@ households/
   {householdId}/
     profile:
       createdAt: Timestamp
-      lastOpenedAt: Timestamp
+      lastOpenedAtAnyDevice: Timestamp
       totalMenusCreated: number
+      ownerUid: string
 
-    members/                         ← subcolección (control de acceso)
-      {authUid}/
-        role: "user" | "admin"
-        createdAt: Timestamp
-        active: boolean
-
-    devices/                         ← opcional para auditoría técnica
+    devices/                         ← control por dispositivo
       {deviceId}/
-        roleHint: "user" | "admin"
+        alias: string                ← nombre visible editable por usuario
+        aliasSource: "auto" | "custom"
+        systemName: string | null    ← nombre reportado por SO si disponible
+        model: string | null         ← modelo técnico (ej: "Pixel 8", "iPhone15,3")
+        adminEnabled: boolean
+        adminEnabledUpdatedAt: Timestamp
+        adminEnabledUpdatedByDeviceId: string | null
+        platform: "android" | "ios" | "web" | "macos" | "windows" | "linux"
         lastSeenAt: Timestamp
-        platform: "android" | "ios"
+        appVersion: string | null
 
     menus/                           ← subcolección: historial de menús
       {menuId}/
         type: "almuerzo" | "cena"
         createdAt: Timestamp
-        createdByRole: "user" | "admin"
+        createdByMode: "user"         ← en MVP siempre "user"
+        createdByDeviceId: string
         ingredients:
           - { categoria, nombre, cantidad, preparacion, imageRef }
         deviceInfo: string            ← opcional, para debug
@@ -854,7 +931,8 @@ households/
       {eventId}/
         event: "app_opened" | "menu_started" | "menu_completed" | "menu_abandoned"
         timestamp: Timestamp
-        sourceRole: "user" | "admin"
+        sourceMode: "user" | "admin"
+        sourceDeviceId: string
         metadata: map
 
     catalogItems/                    ← catálogo editable por admin (por hogar)
@@ -870,36 +948,51 @@ households/
         deletedAt: Timestamp | null
         createdAt: Timestamp
         updatedAt: Timestamp
-
-pairingTokens/
-  {tokenId}/                         ← documento efímero (TTL)
-    householdId: string
-    createdByUid: string
-    createdAt: Timestamp
-    expiresAt: Timestamp
-    consumedAt: Timestamp | null
-    consumedByUid: string | null
 ```
 
 **Nota importante:** `catalogItems` en Firestore es la fuente de verdad a largo plazo por hogar. Al arrancar la app de usuario, **si tiene conexión**, descarga el catálogo activo y lo cachea localmente. **Si no tiene conexión**, usa el catálogo cacheado (o los datos hardcodeados del primer uso). El orden de rotación sigue siendo local.
 
-### 12.3 Identidad y bootstrap seguro
+### 12.3 Identidad y bootstrap seguro (cuenta única)
 
-**Dispositivo user:**
-1. `signInAnonymously()` en segundo plano (sin UI de login).
-2. Si no existe `householdId` local:
-   - llama a callable `bootstrapUserHousehold()`
-   - la función crea `householdId` + `members/{authUid, role:user}` atómicamente
+**Todos los dispositivos:**
+1. Login con la misma cuenta del hogar (Google Sign-In o email/contraseña, según el método elegido al registrar la cuenta).
+2. Al iniciar sesión, si no existe `householdId` local:
+   - llama a callable `bootstrapAccountHousehold()`
+   - la función crea (si hace falta) el hogar para `request.auth.uid`
    - devuelve `householdId` y se guarda localmente.
+3. Registro de dispositivo:
+   - callable `registerOrHeartbeatDevice(deviceId, alias, platform, appVersion, systemName, model)`.
+   - si el device es nuevo, inicia con `adminEnabled = true`.
+   - si el device ya existe, actualiza presencia (`lastSeenAt`) y metadatos técnicos (`platform`, `systemName`, `model`, `appVersion`).
+   - en devices existentes no se actualiza alias desde heartbeat.
+4. Renombrado manual de alias:
+   - callable `setDeviceAlias(requesterDeviceId, targetDeviceId, alias)`.
+   - valida `devices/{requesterDeviceId}.adminEnabled == true`.
+   - solo permite actualizar campos de alias (`alias`, `aliasSource`, timestamps relacionados).
+   - no permite modificar `adminEnabled`.
+5. Cambios de admin por dispositivo:
+   - callable `setDeviceAdminEnabled(requesterDeviceId, targetDeviceId, enabled)`
+   - valida que ambos devices pertenezcan al `householdId`
+   - valida `requesterDeviceId != targetDeviceId`
+   - valida `devices/{requesterDeviceId}.adminEnabled == true`
+   - actualiza `adminEnabled` del target y auditoría (`adminEnabledUpdatedAt`, `adminEnabledUpdatedByDeviceId`)
+6. Logging de eventos:
+   - `app_opened`: se registra en cada apertura con `sourceDeviceId`.
+   - `sourceMode` para `app_opened` se define por la pantalla de entrada resuelta:
+     - Dashboard admin directo (`lastMode=admin` y `adminEnabled=true`) → `sourceMode="admin"`.
+     - Cualquier entrada a Home/flujo normal → `sourceMode="user"`.
+   - `menu_started`, `menu_completed` y `menu_abandoned` se registran con `sourceMode="user"` en MVP.
+7. Creación de menús:
+   - En MVP los menús se generan solo desde flujo usuario.
+   - Por eso `menus.createdByMode` se guarda siempre como `"user"`.
+   - Se guarda también `createdByDeviceId` para trazabilidad multi-device.
+8. Campos derivados del perfil:
+   - `totalMenusCreated` se actualiza en backend (Cloud Function trigger `onCreate` de `menus/{menuId}`) con incremento atómico.
+   - `lastOpenedAtAnyDevice` se actualiza en backend a partir de eventos `app_opened`.
+   - Para vistas por device, se usa `devices/{deviceId}.lastSeenAt` y/o `appEvents` filtrado por `sourceDeviceId`.
+   - El cliente no debe escribir estos campos derivados.
 
-**Dispositivo admin:**
-1. Login email/contraseña.
-2. Debe tener claim `admin=true` (asignado previamente desde Firebase Admin SDK/Console por el desarrollador).
-3. Si no está vinculado a ningún hogar, usa pairing:
-   - introduce/escanea código temporal
-   - callable `pairAdminToHousehold(token)` valida token y crea `members/{adminUid, role:admin}`.
-
-Este diseño evita depender de un UUID local no autenticado para seguridad.
+Este diseño elimina el pairing y la gestión de claims por rol para el MVP.
 
 ### 12.4 Reglas de seguridad Firestore (modelo cerrado)
 
@@ -911,77 +1004,80 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isAdminClaim() {
-      return isSignedIn() && request.auth.token.admin == true;
+    function householdDoc(householdId) {
+      return /databases/$(database)/documents/households/$(householdId);
     }
 
-    function memberDoc(householdId) {
-      return /databases/$(database)/documents/households/$(householdId)/members/$(request.auth.uid);
+    function isHouseholdOwner(householdId) {
+      return isSignedIn() && get(householdDoc(householdId)).data.ownerUid == request.auth.uid;
     }
 
-    function isHouseholdMember(householdId) {
-      return isSignedIn() && exists(memberDoc(householdId));
-    }
-
-    function isHouseholdAdmin(householdId) {
-      return isHouseholdMember(householdId) && get(memberDoc(householdId)).data.role == "admin";
+    function doesNotTouchDerivedProfileFields() {
+      return !request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny(['totalMenusCreated', 'lastOpenedAtAnyDevice']);
     }
 
     // Perfil hogar
     match /households/{householdId} {
-      allow read: if isHouseholdMember(householdId);
+      allow read: if isHouseholdOwner(householdId);
       allow create, delete: if false; // solo backend/callables
-      allow update: if isHouseholdMember(householdId);
+      allow update: if isHouseholdOwner(householdId) && doesNotTouchDerivedProfileFields();
     }
 
-    // Membresías (solo backend/callables)
-    match /households/{householdId}/members/{uid} {
-      allow read: if isHouseholdMember(householdId);
+    // Dispositivos
+    match /households/{householdId}/devices/{deviceId} {
+      allow read: if isHouseholdOwner(householdId);
+      // Sin escritura directa desde cliente. Se usan callables:
+      // - registerOrHeartbeatDevice
+      // - setDeviceAlias
+      // - setDeviceAdminEnabled
       allow create, update, delete: if false;
     }
 
     // Menús históricos
     match /households/{householdId}/menus/{menuId} {
-      allow read: if isHouseholdMember(householdId);
-      allow create: if isHouseholdMember(householdId);
-      allow update, delete: if isHouseholdAdmin(householdId);
+      allow read, write: if isHouseholdOwner(householdId);
     }
 
     // Eventos de app
     match /households/{householdId}/appEvents/{eventId} {
-      allow read: if isHouseholdMember(householdId);
-      allow create: if isHouseholdMember(householdId);
-      allow update, delete: if false;
+      allow read, write: if isHouseholdOwner(householdId);
     }
 
     // Catálogo editable
     match /households/{householdId}/catalogItems/{itemId} {
-      allow read: if isHouseholdMember(householdId);
-      allow write: if isHouseholdAdmin(householdId);
-    }
-
-    // Tokens de pairing: solo backend/callables
-    match /pairingTokens/{tokenId} {
-      allow read, write: if false;
+      allow read, write: if isHouseholdOwner(householdId);
     }
   }
 }
 ```
 
+**Nota MVP:** `adminEnabled` es un campo sensible. Se cambia exclusivamente por callable (`setDeviceAdminEnabled`) y no por escritura directa del cliente. El alias se cambia por callable independiente (`setDeviceAlias`) y requiere requester con `adminEnabled=true`; cambiar alias nunca altera `adminEnabled`. `totalMenusCreated` y `lastOpenedAtAnyDevice` son campos derivados y solo los actualiza backend.
+
 ### 12.5 Storage y permisos
 
 - Las fotos se guardan por `householdId` en rutas:
   - `households/{householdId}/ingredients/{itemId}.jpg`
-- Solo admin del hogar puede subir/reemplazar/borrar.
-- El rol user solo puede leer mediante URL firmada o reglas de lectura por membresía (según estrategia elegida en implementación).
+- La cuenta propietaria del hogar puede leer/escribir.
+- En la app oficial, solo modo admin muestra acciones de alta/edición/borrado.
 
 ### 12.6 App Check
 
 Se habilita Firebase App Check (Android Play Integrity / iOS App Attest o DeviceCheck) para reducir abuso de API y escrituras no legítimas desde clientes no oficiales.
 
+### 12.7 Resolución de `imageRef` en cliente
+
+`imageRef` guarda solo la ruta en Storage (por ejemplo `households/{householdId}/ingredients/{itemId}.jpg`), no una URL pública persistida.
+
+Reglas de resolución:
+1. El cliente construye una referencia de Storage con `imageRef`.
+2. El cliente obtiene URL temporal de visualización con `getDownloadURL()` del SDK oficial.
+3. La URL se usa solo para renderizar (no se guarda de vuelta en Firestore).
+4. Si falla la resolución, se muestra placeholder o asset local de respaldo.
+
 ---
 
-## 13. Cambios en la experiencia del usuario (rol `user`)
+## 13. Cambios en la experiencia del modo usuario
 
 La experiencia del usuario debe ser **funcionalmente idéntica** a la app original. Solo se permiten cambios de UX que no alteren el flujo ni la apariencia general.
 
@@ -994,6 +1090,7 @@ La experiencia del usuario debe ser **funcionalmente idéntica** a la app origin
 | Fondos | PNG repetido | Misma imagen, usando `BoxFit.cover` |
 | Imágenes de ingredientes | `centerInside` con padding fijo | `BoxFit.contain` con padding proporcional a pantalla |
 | Feedback táctil | Ninguno en original | Vibración suave (haptic feedback) al pulsar Sí o No |
+| Onboarding inicial | No existe | Tutorial breve 1 vez por device para explicar cuenta, devices y acceso admin por gesto |
 
 ### 13.2 Lo que NO cambia
 
@@ -1002,6 +1099,7 @@ La experiencia del usuario debe ser **funcionalmente idéntica** a la app origin
 - Los textos literales (mismas frases, mismo idioma)
 - La navegación (mismo mapa de pantallas)
 - La ausencia de menús, configuración o botones extra visibles
+- En un dispositivo sin admin habilitado no hay acceso a gestión de dispositivos ni a cambio de nombre de device.
 
 ### 13.3 Nuevo comportamiento: logging silencioso
 
@@ -1009,35 +1107,37 @@ Cada vez que el usuario complete un menú (almuerzo o cena), la app guarda en Fi
 - El menú completo con sus ingredientes
 - La fecha y hora exacta
 - El tipo (`almuerzo` o `cena`)
+- `createdByMode = "user"` (MVP)
+- `createdByDeviceId = deviceId` actual
 
 Cada vez que la app se abre, guarda un evento `app_opened` con timestamp.
+
+Regla de `sourceMode` en eventos:
+1. `app_opened` usa el modo de entrada real del device (`admin` o `user`).
+2. Eventos de menú (`menu_started`, `menu_completed`, `menu_abandoned`) usan `sourceMode="user"` en MVP.
 
 Este logging es invisible para el usuario. No hay spinner, no hay aviso, no hay diferencia en la experiencia.
 
 ---
 
-## 14. Pantallas del administrador (rol `admin`)
+## 14. Pantallas del modo administrador
 
-El admin entra a una app visualmente diferente: moderna, con más información, orientación libre. El idioma sigue siendo español.
+El admin no cambia de aplicación: usa el mismo punto de entrada y flujo de menús que modo usuario, con acceso adicional al panel admin. El idioma sigue siendo español.
 
-### 14.1 Pantalla de login admin
+### 14.1 Acceso a admin por gesto oculto
 
-**Condición de aparición:** Solo cuando el rol guardado es `admin` y no hay sesión activa en Firebase Auth.
+**Condición de aparición:** La app ya tiene sesión de cuenta iniciada.
 
-**Elementos:**
-- Título: `"La Comida del Canco — Admin"`
-- Campo email
-- Campo contraseña (con toggle mostrar/ocultar)
-- Botón `"Entrar"`
-- Mensaje de error si login falla (sin revelar si el email existe o no)
+**Comportamiento:**
+1. En Home (modo usuario), se ejecuta gesto oculto.
+2. Se consulta `adminEnabled` del `deviceId` actual.
+3. Si `adminEnabled = true`: abre un `Modal Bottom Sheet` con acción `Entrar en modo admin`.
+4. Al confirmar: pone `adminModeActive = true` (in-memory), guarda `lastMode = "admin"` (SharedPreferences) y abre Dashboard admin.
+5. Si `adminEnabled = false`: no abre admin, sin feedback visible.
 
-**Comportamiento:** Si el login es correcto, Firebase Auth guarda la sesión.
+No existe botón visible de "cambiar a admin" para el usuario normal.
 
-Tras el login:
-- Si la cuenta admin ya está vinculada a un `householdId` → entra al Dashboard.
-- Si no está vinculada → abre flujo de **vinculación por código/QR** y, al completarlo, entra al Dashboard.
-
-Las siguientes aperturas van directamente al Dashboard sin pasar por login (hasta que la sesión expire o se haga logout explícito).
+**Relación con onboarding:** En primera apertura, el onboarding ya explica este gesto y su disponibilidad según `adminEnabled`.
 
 ---
 
@@ -1046,17 +1146,28 @@ Las siguientes aperturas van directamente al Dashboard sin pasar por login (hast
 **Propósito:** Vista rápida del estado del sistema y punto de acceso a todas las funciones.
 
 **Elementos:**
-- Cabecera: nombre de la app + botón de logout (icono)
+- Cabecera: nombre de la app + botón `Cerrar sesión` (icono, solo visible desde modo admin)
 - **Tarjeta de actividad reciente:**
-  - Última vez que se abrió la app de usuario: fecha y hora
+  - Última vez que se abrió la app en **cualquier device** de la cuenta: fecha y hora (desde `profile.lastOpenedAtAnyDevice`)
+  - Última vez que se abrió la app en **este device**: fecha y hora (desde `devices/{currentDeviceId}.lastSeenAt` o `appEvents` filtrado por `sourceDeviceId`)
+  - Estado de este device: `adminEnabled` (activo/inactivo)
   - Número de menús generados en los últimos 7 días
   - Número de menús generados en total
 - **Accesos directos (grid 2×2 o lista):**
+  - `Dispositivos` → navega a sección 14.7
   - `Historial de menús` → navega a sección 14.3
   - `Gestionar alimentos` → navega a sección 14.4
   - `Estadísticas` → navega a sección 14.6
   - `Papelera` → navega a sección 14.5
 - Datos en tiempo real (Firestore stream, se actualiza solo).
+
+**Comportamiento del botón `Cerrar sesión`:**
+- Solo es visible y accesible cuando el device está en modo admin (es decir, `adminModeActive = true`).
+- Al pulsar: diálogo de confirmación `"¿Cerrar sesión en este dispositivo?"` con botones `Cancelar` / `Cerrar sesión`.
+- Si confirma: cierra la sesión de Firebase Auth **únicamente en este device** (`FirebaseAuth.instance.signOut()` afecta solo al device local).
+- Los demás devices de la misma cuenta **no se ven afectados**: cada device mantiene su propia sesión de Firebase Auth de forma independiente.
+- Del mismo modo, cuando un device nuevo inicia sesión en la cuenta, no interrumpe ni modifica la sesión del resto de devices.
+- Tras el cierre, este device vuelve a la pantalla de login y sus datos locales (`lastMode`, `onboardingSeen`, rotaciones) se conservan para cuando vuelva a iniciar sesión.
 
 ---
 
@@ -1072,7 +1183,7 @@ Las siguientes aperturas van directamente al Dashboard sin pasar por login (hast
   - Vista compacta: los nombres de los ingredientes en una línea (`"Quinoa · Lentejas · Calabacín · Cúrcuma"`)
 - Al pulsar un ítem: se expande o navega a detalle con:
   - Cada ingrediente en su propio bloque: nombre, cantidad, instrucción de preparación
-  - La imagen del ingrediente (del asset local o de Storage si es uno nuevo)
+  - La imagen del ingrediente (del asset local o de Storage si es uno nuevo; si viene de `imageRef`, resolver URL con `getDownloadURL()` según sección 12.7)
 
 **Filtros disponibles:**
 - Por tipo (Almuerzo / Cena / Todos)
@@ -1104,6 +1215,7 @@ Las siguientes aperturas van directamente al Dashboard sin pasar por login (hast
   - Si es un ingrediente existente con asset local: muestra la imagen actual
   - Botón `"Cambiar foto"` que abre selector de galería o cámara del dispositivo
   - La foto se sube a Firebase Storage en `households/{householdId}/ingredients/{itemId}.jpg`
+  - Tras guardar, se persiste solo `imageRef` (path); la visualización se resuelve con `getDownloadURL()` (sección 12.7)
   - Mientras sube: spinner visible, botón guardar desactivado
 - Botón `"Guardar"` (desactivado si nombre está vacío)
 - Botón `"Cancelar"`
@@ -1139,8 +1251,13 @@ Las siguientes aperturas van directamente al Dashboard sin pasar por login (hast
 
 **Actividad general:**
 - Primera vez que se usó la app (fecha)
-- Última vez que se abrió la app (fecha y hora, actualizado en tiempo real)
+- Última vez que se abrió la app en cualquier device (fecha y hora; fuente: `profile.lastOpenedAtAnyDevice`)
+- Última vez que se abrió la app en este device (fecha y hora, actualizado en tiempo real; fuente: `appEvents` con `event="app_opened"` y `sourceDeviceId=currentDeviceId`, o `devices.lastSeenAt`)
 - Total de menús generados (almuerzo + cena separados)
+
+**Uso por device:**
+- Lista/ranking de devices por última apertura (`lastSeenAt`)
+- Contador de aperturas por device (a partir de `appEvents` con `event="app_opened"` agrupado por `sourceDeviceId`)
 
 **Menús por período:**
 - Gráfico de barras semanal: nº de menús por día en los últimos 7 días
@@ -1153,14 +1270,45 @@ Las siguientes aperturas van directamente al Dashboard sin pasar por login (hast
 **Racha de uso:**
 - Días consecutivos con al menos un menú generado (racha actual y máxima histórica)
 
-**Implementación:** Las estadísticas se calculan en cliente haciendo queries a Firestore. Las Cloud Functions se usan solo para bootstrap/pairing, no para cálculo de métricas. Para el free tier, el coste esperado de estas lecturas sigue siendo bajo.
+**Implementación:** Las estadísticas se calculan en cliente haciendo queries a Firestore. Las Cloud Functions se usan para bootstrap de cuenta y registro inicial de dispositivos, no para cálculo de métricas. Para el free tier, el coste esperado de estas lecturas sigue siendo bajo.
 
 ---
 
-## 15. Mapa de navegación completo (ambos roles)
+### 14.7 Gestión de dispositivos (admin)
+
+**Propósito:** Controlar en qué dispositivos de la misma cuenta está permitido abrir modo admin con gesto.
+
+**Elementos:**
+- Lista de dispositivos registrados en `households/{householdId}/devices`
+  - Incluye **todos los devices** de la cuenta compartida
+  - Orden por `lastSeenAt` descendente (más reciente primero)
+- Por ítem:
+  - Alias del dispositivo
+  - Plataforma
+  - Última conexión (`lastSeenAt`)
+  - Estado `adminEnabled` (activo/inactivo)
+- Acciones por ítem:
+  - `Editar nombre` (actualiza alias visible del dispositivo)
+  - toggle `Permitir modo admin`
+
+**Reglas:**
+1. El dispositivo actual no puede desactivarse a sí mismo.
+2. Al desactivar otro dispositivo, ese dispositivo deja de poder abrir admin con gesto.
+3. La reactivación se hace desde cualquier dispositivo que siga habilitado.
+4. Cambiar alias nunca modifica `adminEnabled`.
+5. Un dispositivo con `adminEnabled=false` no puede entrar a este panel ni ejecutar cambio de nombre.
+
+---
+
+## 15. Mapa de navegación completo (ambos modos)
 
 ```
-[ROL USER]
+[PRIMERA APERTURA DE DEVICE]
+Login cuenta (Google Sign-In o email/contraseña — por device, independiente)
+  └─→ Onboarding (1 vez)
+          └─→ Home
+
+[MODO USUARIO]
 Home
 ├─→ Selección Almuerzo ──→ Menú Final Almuerzo
 │                               ├─→ Home
@@ -1171,27 +1319,30 @@ Home
 ├─→ Menú Final Almuerzo* (si existe)
 └─→ Menú Final Cena* (si existe)
 
-[ROL ADMIN]
-Login (si no hay sesión)
-    └─→ ¿Cuenta vinculada a hogar?
-            ├─ NO → Vinculación (código o QR) ─→ Dashboard
-            └─ SÍ → Dashboard
-                    ├─→ Historial de menús
-                    │       └─→ Detalle de menú
-                    ├─→ Gestión del catálogo
-                    │       └─→ Añadir/Editar ingrediente
-                    ├─→ Papelera
-                    └─→ Estadísticas
+[MODO ADMIN]
+Arranque (si `lastMode=admin` y `adminEnabled=true`)
+  └─→ Dashboard
+Home (usuario)
+  └─→ Gesto oculto (solo si adminEnabled=true) ─→ Dashboard
+Dashboard
+  ├─→ Dispositivos
+  ├─→ Historial de menús
+  │       └─→ Detalle de menú
+  ├─→ Gestión del catálogo
+  │       └─→ Añadir/Editar ingrediente
+  ├─→ Papelera
+  ├─→ Estadísticas
+  └─→ Salir de admin → Home (usuario)
 ```
 
 ---
 
 ## 16. Comportamiento offline
 
-| Situación | Rol user | Rol admin |
+| Situación | Modo usuario | Modo admin |
 |-----------|----------|-----------|
-| Sin conexión, primera apertura | Funciona en local con datos hardcodeados. El `bootstrapUserHousehold` queda pendiente hasta recuperar red. | No puede hacer login ni vinculación. Muestra error de red. |
-| Sin conexión, no primera apertura | Usa catálogo cacheado localmente. Funciona 100%. El log de menús se encola y se envía cuando recupere conexión. | Puede ver datos cacheados (Firestore offline persistence). No puede hacer cambios que requieran sync inmediato. |
+| Sin conexión, primera apertura en un device nuevo | Si no tiene sesión previa, no puede iniciar cuenta hasta recuperar red. Si ya tiene sesión/caché, funciona con datos locales hardcodeados o cacheados. | Si no existe caché local de `adminEnabled`, no se permite abrir admin. |
+| Sin conexión, no primera apertura | Usa catálogo cacheado localmente. Funciona 100%. El log de menús se encola y se envía cuando recupere conexión. | Puede ver datos cacheados (Firestore offline persistence). Los cambios admin quedan pendientes de sincronización. |
 | Conexión recuperada | Envía logs encolados. Descarga catálogo actualizado si hay cambios. | Sincroniza automáticamente. |
 
 ---
@@ -1201,6 +1352,5 @@ Login (si no hay sesión)
 La arquitectura base ya queda cerrada. Estos puntos se pueden decidir durante la implementación:
 
 1. **Migración de rotación legacy:** si se importan o no los valores de SharedPreferences del Android Java original.
-2. **Sincronización de catálogo en caliente:** aplicar cambios admin al instante en una sesión user en curso, o en la siguiente apertura (recomendado: siguiente apertura por simplicidad).
-3. **Canal de pairing principal:** permitir ambos (código + QR) o lanzar primero solo con código y añadir QR después.
-4. **Retención histórica:** definir política de conservación (ej: indefinida o purgado opcional >24 meses).
+2. **Sincronización de catálogo en caliente:** aplicar cambios admin al instante en una sesión en modo usuario en curso, o en la siguiente apertura (recomendado: siguiente apertura por simplicidad).
+3. **Retención histórica:** definir política de conservación (ej: indefinida o purgado opcional >24 meses).
